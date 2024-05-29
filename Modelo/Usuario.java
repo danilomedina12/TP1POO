@@ -6,8 +6,8 @@ import java.time.*;
 
 public class Usuario {
 	private static int nextId = 1;
-	public int id;
-	public String nombre;
+	private int id;
+	private String nombre;
  
 	public Usuario(String nombre) {
 		this.id = nextId++;
