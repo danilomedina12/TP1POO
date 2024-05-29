@@ -47,20 +47,20 @@ public class SistemaCPM {
 	    System.out.println("Test de los usuarios y donaciones");
 	    Usuario sarahConnor = new Usuario("Sarah Connor");
 	    sarahConnor.donarCajas(10, LocalDate.now(), "Almagro");
-	    System.out.println(sarahConnor.nombre + " ya donó");
+	    System.out.println(sarahConnor.obtenerNombre() + " ya donó");
 	    Usuario charlesLeclerc = new Usuario("Charles Leclerc");
 	    charlesLeclerc.donarCajas(5, LocalDate.now(), "Almagro");
-	    System.out.println(charlesLeclerc.nombre + " ya donó");
+	    System.out.println(charlesLeclerc.obtenerNombre() + " ya donó");
 	    Usuario elenRipley = new Usuario("Elen Ripley");
 	    elenRipley.reservarCajas(13, LocalDate.now().plusDays(1), "Almagro");
-	    
-	    if (ControladorDonaciones.donaciones.stream().noneMatch(d -> d.usuarioDonante == sarahConnor.id)) {
+	    System.out.println(elenRipley.obtenerNombre() + " ya reservó");
+	    if (ControladorDonaciones.donaciones.stream().noneMatch(d -> d.usuarioDonante == sarahConnor.obtenerId())) {
 	        System.out.println("Prueba exitosa: La donación de Sarah Connor ya no está en el sistema.");
 	    } else {
 	        System.out.println("Prueba fallida: La donación de Sarah Connor todavía está en el sistema.");
 	    }
 
-	    DonacionesUsuario donacionCharles = ControladorDonaciones.donaciones.stream().filter(d -> d.usuarioDonante == charlesLeclerc.id).findFirst().orElse(null);
+	    DonacionesUsuario donacionCharles = ControladorDonaciones.donaciones.stream().filter(d -> d.usuarioDonante == charlesLeclerc.obtenerId()).findFirst().orElse(null);
 	    if (donacionCharles != null && donacionCharles.obtenerCantidad() == 2) {
 	        System.out.println("Prueba exitosa: La donación de Charles Leclerc tiene la cantidad correcta de cajas (2 cajas) en el sistema.");
 	    } else {
