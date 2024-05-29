@@ -54,13 +54,13 @@ public class SistemaCPM {
 	    Usuario elenRipley = new Usuario("Elen Ripley");
 	    elenRipley.reservarCajas(13, LocalDate.now().plusDays(1), "Almagro");
 	    System.out.println(elenRipley.obtenerNombre() + " ya reservó");
-	    if (ControladorDonaciones.donaciones.stream().noneMatch(d -> d.usuarioDonante == sarahConnor.obtenerId())) {
+	    if (ControladorDonaciones.donaciones.stream().noneMatch(d -> d.obtenerIdUsuarioDonante() == sarahConnor.obtenerId())) {
 	        System.out.println("Prueba exitosa: La donación de Sarah Connor ya no está en el sistema.");
 	    } else {
 	        System.out.println("Prueba fallida: La donación de Sarah Connor todavía está en el sistema.");
 	    }
 
-	    DonacionesUsuario donacionCharles = ControladorDonaciones.donaciones.stream().filter(d -> d.usuarioDonante == charlesLeclerc.obtenerId()).findFirst().orElse(null);
+	    DonacionesUsuario donacionCharles = ControladorDonaciones.donaciones.stream().filter(d -> d.obtenerIdUsuarioDonante() == charlesLeclerc.obtenerId()).findFirst().orElse(null);
 	    if (donacionCharles != null && donacionCharles.obtenerCantidad() == 2) {
 	        System.out.println("Prueba exitosa: La donación de Charles Leclerc tiene la cantidad correcta de cajas (2 cajas) en el sistema.");
 	    } else {
