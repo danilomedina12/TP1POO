@@ -37,4 +37,8 @@ public class DonacionesUsuario {
 	public int obtenerId() {
 		return this.id;
 	}
+	
+	public int obtenerIdUsuarioDonante(){
+		return this.usuarioDonante();
+		}
 }
