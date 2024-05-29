@@ -25,4 +25,8 @@ public class Usuario {
 	public void reservarCajas(int cantidad, LocalDate plusDays, String ubicacion) {
 		ControladorDonaciones.reservarCajas(cantidad, plusDays, ubicacion);
 	}
+
+	public String obtenerNombre() {
+		return this.nombre;
+	}
 }
