@@ -5,11 +5,11 @@ import java.time.*;
 public class DonacionesUsuario {
 	private static int nextId = 1;
 	
-	int id;
-	int cantidad;
-	String ubicacion;
-	LocalDate fechaDisponibilidad;
-	public int usuarioDonante;
+	private int id;
+	private int cantidad;
+	private String ubicacion;
+	private LocalDate fechaDisponibilidad;
+	private int usuarioDonante;
 	
 	public DonacionesUsuario(int cantidad, String ubicacion, LocalDate fechaDisponibilidad, int usuarioDonante){
 		this.id = nextId++;
