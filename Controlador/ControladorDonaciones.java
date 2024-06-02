@@ -2,6 +2,7 @@ package Controlador;
 
 import Modelo.DonacionesUsuario;
 import Vista.PantallaDeTexto;
+import Modelo.Ubicacion;
 
 import java.time.*;
 import java.util.*;
@@ -23,7 +24,6 @@ public class ControladorDonaciones {
 	        }
 	    }
 	    
-	    //ESTE IF SE PODRIA SACAR, YA QUE LA UNICA FUNCION QUE CUMPLE ES MOSTRAR MENSAJE
 	    if (cajasEncontradas < cantidad) {
 	        PantallaDeTexto.mostrarTextoFallo("No se encontraron suficientes cajas. Cajas encontradas: " + cajasEncontradas);
 	    }
@@ -32,6 +32,9 @@ public class ControladorDonaciones {
 	}
 
 	public static void reservarCajas(int cantidad, LocalDate fecha, String ubicacion) {
+	   if(!validarUbicacion(ubicacion)) {
+			return;
+	   }
 	    List<DonacionesUsuario> cajasParaReservar = buscarCajas(cantidad, fecha, ubicacion);
 	    if(!hayCajasSuficientesParaReservar(cajasParaReservar,cantidad)) {
 	        PantallaDeTexto.mostrarTextoFallo("No se pudo realizar la reserva. No hay suficientes cajas disponibles");
@@ -51,6 +54,9 @@ public class ControladorDonaciones {
 	}
 	
 	public static void agregarDonacion(int cantidad, LocalDate fecha, String ubicacion, int idUsuario) {
+		if(!validarUbicacion(ubicacion)) {
+			return;
+		}
 		DonacionesUsuario nuevaDonacion = new DonacionesUsuario(cantidad, ubicacion, fecha, idUsuario);
 		donaciones.add(nuevaDonacion);
 		PantallaDeTexto.mostrarTextoExito("Donacion exitosa. Cantidad de cajas donadas: " + cantidad);
@@ -68,5 +74,15 @@ public class ControladorDonaciones {
 
 	private static boolean hayCajasSuficientesParaReservar(List<DonacionesUsuario> donacionesBuscadas, int cantidadParaReservar) {
 		return donacionesBuscadas.stream().mapToInt(DonacionesUsuario :: obtenerCantidad).sum() >= cantidadParaReservar;
+	}
+	public static boolean validarUbicacion(String ubicacion) {
+		Ubicacion ubicacionBuscada = new Ubicacion();
+		boolean esValida = ubicacionBuscada.esUbicacionValida(ubicacion);
+		
+		if(!esValida) {
+			PantallaDeTexto.mostrarTextoFallo("La ubicación: " + ubicacion + " no es apta. Por favor, indicá otra ubicación");
+		}
+		
+		return esValida;
 	}
 }
