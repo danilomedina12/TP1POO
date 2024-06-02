@@ -7,9 +7,7 @@ import java.util.*;
 import java.time.*;
 
 public class SistemaCPM {
-	/*TODO: Implementar posibles métodos que permitirían que desde el sistema se hagan acciones básicas para el proceso de entrega
-         y recibo de cajas*/
-
+	
 	public static void main(String[] args) throws Exception {
 		try {
 			testControladorDonaciones();
@@ -17,6 +15,12 @@ public class SistemaCPM {
 			testUsuariosYDonaciones();
 			System.out.println("-----------------------------------------------");
 			testControladorRegistro();
+			System.out.println("-----------------------------------------------");
+			testValidacionUbicacion();
+			System.out.println("-----------------------------------------------");
+			testValidacionUbicacionExtendida();
+			System.out.println("-----------------------------------------------");
+			testDonacionEnUbicacionNoValida();
 			System.out.println("Pasaron los tests");
 		} catch (AssertionError e) {
 			System.out.println("Fallaron los tests: " + e.getMessage());
@@ -82,5 +86,51 @@ public class SistemaCPM {
 	    assertion(ControladorRegistro.usuariosRegistrados.size() == 2, "Falló la prueba de registro con distinto nombre");
 
 	    System.out.println("Pasaron los tests de ControladorRegistro");
+	}
+
+	public static void testValidacionUbicacion() throws Exception {
+	    System.out.println("Test de validación de ubicación");
+
+	    String ubicacionValida = "Madrid";
+	    boolean esValida = ControladorDonaciones.validarUbicacion(ubicacionValida);
+	    assertion(esValida, "La ubicación '" + ubicacionValida + "' debería ser válida.");
+
+	    String ubicacionNoValida = "Posadas";
+	    esValida = ControladorDonaciones.validarUbicacion(ubicacionNoValida);
+	    assertion(!esValida, "La ubicación '" + ubicacionNoValida + "' no debería ser válida.");
+	    System.out.println("Pasó el test de validación de ubicación");
+	}
+
+	public static void testValidacionUbicacionExtendida() throws Exception {
+	    System.out.println("Test extendido de validación de ubicación");
+
+	    List<String> ubicacionesValidas = Arrays.asList("Madrid", "Almagro");
+	    for (String ubicacion : ubicacionesValidas) {
+	        boolean esValida = ControladorDonaciones.validarUbicacion(ubicacion);
+	        assertion(esValida, "La ubicación '" + ubicacion + "' debería ser válida.");
+	    }
+
+	    List<String> ubicacionesNoValidas = Arrays.asList("Barcelona", "Sevilla", "Posadas");
+	    for (String ubicacion : ubicacionesNoValidas) {
+	        boolean esValida = ControladorDonaciones.validarUbicacion(ubicacion);
+	        assertion(!esValida, "La ubicación '" + ubicacion + "' no debería ser válida.");
+	    }
+
+	    System.out.println("Todas las pruebas de validación de ubicación extendida pasaron.");
+	}
+	public static void testDonacionEnUbicacionNoValida() throws Exception {
+	    System.out.println("Test de donación en ubicación no válida");
+
+	    String ubicacionNoValida = "UbicacionNoValida";
+	    LocalDate fecha = LocalDate.now();
+	    int cantidad = 10;
+	    int idUsuario = 1;  
+	    ControladorDonaciones.donaciones = new ArrayList<>(); 
+	    ControladorDonaciones.agregarDonacion(cantidad, fecha, ubicacionNoValida, idUsuario);
+
+	    boolean donacionAgregada = ControladorDonaciones.donaciones.stream().anyMatch(d -> d.obtenerUbicacion().equals(ubicacionNoValida));
+	    assertion(!donacionAgregada, "La donación en una ubicación no válida debería haber sido rechazada.");
+
+	    System.out.println("Pasó el test de donación en ubicación no válida");
 	}
 }
