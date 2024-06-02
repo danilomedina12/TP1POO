@@ -76,13 +76,12 @@ public class ControladorDonaciones {
 		return donacionesBuscadas.stream().mapToInt(DonacionesUsuario :: obtenerCantidad).sum() >= cantidadParaReservar;
 	}
 	public static boolean validarUbicacion(String ubicacion) {
-		Ubicacion ubicacionBuscada = new Ubicacion();
-		boolean esValida = ubicacionBuscada.esUbicacionValida(ubicacion);
-		
-		if(!esValida) {
-			PantallaDeTexto.mostrarTextoFallo("La ubicación: " + ubicacion + " no es apta. Por favor, indicá otra ubicación");
-		}
-		
-		return esValida;
-	}
+	        boolean esValida = Ubicacion.esUbicacionValida(ubicacion);
+	        
+	        if (!esValida) {
+	            PantallaDeTexto.mostrarTextoFallo("La ubicación: " + ubicacion + " no es apta. Por favor indicá otra ubicación");
+	        }
+	        
+	        return esValida;
+	    }
 }
