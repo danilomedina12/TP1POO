@@ -17,7 +17,7 @@ public class DonacionesUsuario {
 		this.ubicacion = ubicacion;
 		this.fechaDisponibilidad = fechaDisponibilidad;
 		this.usuarioDonante = usuarioDonante;
-		}
+	}
 	
 	public void actualizarCantidad(int nuevaCantidad) {
 		this.cantidad = nuevaCantidad;
@@ -34,11 +34,12 @@ public class DonacionesUsuario {
 	public String obtenerUbicacion() {
 		return this.ubicacion;
 	}
+
 	public int obtenerId() {
 		return this.id;
 	}
 	
 	public int obtenerIdUsuarioDonante(){
-		return this.usuarioDonante();
-		}
+		return this.usuarioDonante;
+	}
 }
